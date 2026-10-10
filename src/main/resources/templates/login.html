@@ -1,45 +1,108 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- importamos estilos bootstrap -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-	crossorigin="anonymous">
-</head>
-<body>
-	<div>
-		<h1>Acceso</h1>
-		<!-- formulario -->
-		<form>
-			<div class="mb-3">
-				<label for="exampleInputEmail1" class="form-label">Email
-					address</label> <input type="email" class="form-control"
-					id="exampleInputEmail1" aria-describedby="emailHelp">
-				<div id="emailHelp" class="form-text">We'll never share your
-					email with anyone else.</div>
-			</div>
-			<div class="mb-3">
-				<label for="exampleInputPassword1" class="form-label">Password</label>
-				<input type="password" class="form-control"
-					id="exampleInputPassword1">
-			</div>
-			<div class="mb-3 form-check">
-				<input type="checkbox" class="form-check-input" id="exampleCheck1">
-				<label class="form-check-label" for="exampleCheck1">Check me
-					out</label>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-	</div>
 
-	<!-- importamos lib js de bootstrap -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-		crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iniciar sesión | Cibertec</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+
+<body class="login-body">
+
+    <main class="login-container">
+        <section class="login-brand">
+            <div class="brand-icon">
+                <span>◆</span>
+            </div>
+
+            <h1>DataWeb</h1>
+            <p class="brand-subtitle">SISTEMA DE GESTIÓN</p>
+
+            <div class="brand-decoration"></div>
+
+            <p class="brand-description">
+                Administra tus recursos de manera eficiente,
+                segura y sencilla.
+            </p>
+        </section>
+
+        <section class="login-panel">
+            <div class="login-heading">
+                <span class="welcome-label">BIENVENIDO</span>
+                <h2>Iniciar sesión</h2>
+                <p>Ingresa tus datos para acceder al sistema.</p>
+            </div>
+
+            <form action="/login" method="post">
+
+                <div class="mb-4">
+                    <label for="correo" class="form-label">
+                        Correo electrónico
+                    </label>
+
+                    <input
+                        type="email"
+                        class="form-control custom-input"
+                        id="correo"
+                        name="username"
+                        placeholder="usuario@empresa.com"
+                        autocomplete="username"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="clave" class="form-label">
+                        Contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        class="form-control custom-input"
+                        id="clave"
+                        name="password"
+                        placeholder="Ingresa tu contraseña"
+                        autocomplete="current-password"
+                        required>
+                </div>
+
+                <div class="d-flex justify-content-between
+                            align-items-center mb-4">
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="recordar">
+
+                        <label class="form-check-label"
+                               for="recordar">
+                            Recordarme
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn login-button w-100">
+                    Iniciar sesión
+                    <span class="button-arrow">→</span>
+                </button>
+
+                <p class="login-footer">
+                    Acceso exclusivo para usuarios autorizados.
+                </p>
+            </form>		
+        </section>
+    </main>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    </script>
 </body>
 </html>
