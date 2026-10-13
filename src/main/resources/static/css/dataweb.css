@@ -403,4 +403,394 @@ body {
     .dw-table-card .table {
         font-size: .84rem;
     }
+	
+	
+	/* ==================================================
+	   DATAWEB - PÁGINA DE INICIO
+	   ================================================== */
+
+	.dw-home-hero {
+	    position: relative;
+	    display: grid;
+	    grid-template-columns: 1.15fr .85fr;
+	    align-items: center;
+	    gap: 35px;
+	    min-height: 440px;
+	    margin-bottom: 65px;
+	    padding: clamp(30px, 5vw, 65px);
+	    overflow: hidden;
+	    border-radius: 24px;
+	    background: linear-gradient(120deg, #101c35, #1d4ed8);
+	    color: #fff;
+	    box-shadow: var(--dw-shadow);
+	}
+
+	.dw-home-hero-content {
+	    position: relative;
+	    z-index: 2;
+	}
+
+	.dw-home-label {
+	    display: inline-block;
+	    margin-bottom: 20px;
+	    padding: 7px 12px;
+	    border: 1px solid rgba(255, 255, 255, .2);
+	    border-radius: 30px;
+	    background: rgba(255, 255, 255, .08);
+	    color: #bfdbfe;
+	    font-size: .75rem;
+	    font-weight: 800;
+	    letter-spacing: 2px;
+	}
+
+	.dw-home-hero h1 {
+	    max-width: 650px;
+	    margin-bottom: 20px;
+	    color: #fff;
+	    font-size: clamp(2.3rem, 5vw, 3.7rem);
+	    font-weight: 800;
+	    letter-spacing: -1.5px;
+	    line-height: 1.12;
+	}
+
+	.dw-home-hero h1 span {
+	    color: #93c5fd;
+	}
+
+	.dw-home-hero-content > p {
+	    max-width: 560px;
+	    margin-bottom: 28px;
+	    color: #dbeafe;
+	    font-size: 1.05rem;
+	    line-height: 1.8;
+	}
+
+	.dw-home-actions {
+	    display: flex;
+	    flex-wrap: wrap;
+	    gap: 12px;
+	}
+
+	.dw-home-btn-primary {
+	    display: inline-flex;
+	    min-height: 48px;
+	    align-items: center;
+	    justify-content: center;
+	    gap: 12px;
+	    padding: 12px 20px;
+	    border: 1px solid var(--dw-primary);
+	    border-radius: 10px;
+	    background: var(--dw-primary);
+	    color: #fff;
+	    font-weight: 700;
+	    text-decoration: none;
+	}
+
+	.dw-home-btn-primary:hover {
+	    border-color: #3b82f6;
+	    background: #3b82f6;
+	    color: #fff;
+	}
+
+	.dw-home-btn-outline {
+	    display: inline-flex;
+	    min-height: 48px;
+	    align-items: center;
+	    justify-content: center;
+	    padding: 12px 20px;
+	    border: 1px solid rgba(255, 255, 255, .4);
+	    border-radius: 10px;
+	    background: rgba(255, 255, 255, .06);
+	    color: #fff;
+	    font-weight: 700;
+	}
+
+	.dw-home-btn-outline:hover {
+	    border-color: #fff;
+	    background: rgba(255, 255, 255, .15);
+	    color: #fff;
+	}
+
+	.dw-home-security {
+	    display: flex;
+	    align-items: center;
+	    gap: 9px;
+	    margin-top: 27px;
+	    color: #bfdbfe;
+	    font-size: .85rem;
+	}
+
+	.dw-home-security span {
+	    display: grid;
+	    width: 23px;
+	    height: 23px;
+	    place-items: center;
+	    border-radius: 50%;
+	    background: rgba(96, 165, 250, .2);
+	    color: #93c5fd;
+	    font-weight: 800;
+	}
+
+	/* Ilustración decorativa */
+
+	.dw-home-visual {
+	    position: relative;
+	    display: grid;
+	    min-height: 310px;
+	    place-items: center;
+	}
+
+	.dw-home-orbit {
+	    position: absolute;
+	    width: 260px;
+	    height: 260px;
+	    border: 1px solid rgba(255, 255, 255, .16);
+	    border-radius: 50%;
+	}
+
+	.dw-home-orbit-one {
+	    width: 230px;
+	    height: 230px;
+	}
+
+	.dw-home-orbit-two {
+	    width: 310px;
+	    height: 310px;
+	}
+
+	.dw-home-symbol {
+	    position: relative;
+	    z-index: 1;
+	    display: grid;
+	    width: 150px;
+	    height: 150px;
+	    place-items: center;
+	    border: 1px solid rgba(255, 255, 255, .3);
+	    border-radius: 35px;
+	    background: linear-gradient(
+	        145deg,
+	        rgba(96, 165, 250, .8),
+	        rgba(29, 78, 216, .55)
+	    );
+	    box-shadow: 0 25px 65px rgba(0, 0, 0, .25);
+	    transform: rotate(-8deg);
+	}
+
+	.dw-home-symbol span {
+	    color: #fff;
+	    font-size: 80px;
+	}
+
+	.dw-home-floating {
+	    position: absolute;
+	    z-index: 2;
+	    display: flex;
+	    align-items: center;
+	    gap: 12px;
+	    padding: 14px 17px;
+	    border: 1px solid rgba(255, 255, 255, .18);
+	    border-radius: 14px;
+	    background: rgba(16, 28, 53, .88);
+	    box-shadow: 0 12px 30px rgba(0, 0, 0, .2);
+	    backdrop-filter: blur(10px);
+	}
+
+	.dw-home-floating-top {
+	    top: 25px;
+	    right: -5px;
+	}
+
+	.dw-home-floating-bottom {
+	    bottom: 20px;
+	    left: -5px;
+	}
+
+	.dw-home-floating-icon {
+	    display: grid;
+	    width: 38px;
+	    height: 38px;
+	    flex-shrink: 0;
+	    place-items: center;
+	    border-radius: 11px;
+	    background: rgba(96, 165, 250, .18);
+	    color: #93c5fd;
+	    font-size: 21px;
+	    font-weight: 800;
+	}
+
+	.dw-home-floating strong,
+	.dw-home-floating small {
+	    display: block;
+	}
+
+	.dw-home-floating strong {
+	    color: #fff;
+	    font-size: .85rem;
+	}
+
+	.dw-home-floating small {
+	    margin-top: 3px;
+	    color: #cbd5e1;
+	    font-size: .73rem;
+	}
+
+	/* Sección de módulos */
+
+	.dw-home-modules {
+	    margin-bottom: 65px;
+	}
+
+	.dw-home-modules .dw-page-header {
+	    margin-bottom: 32px;
+	}
+
+	.dw-home-modules .dw-card .card-body {
+	    display: flex;
+	    flex-direction: column;
+	    align-items: flex-start;
+	}
+
+	.dw-home-modules .dw-card p {
+	    flex-grow: 1;
+	}
+
+	.dw-home-module-link {
+	    display: inline-block;
+	    margin-top: 8px;
+	    color: var(--dw-primary);
+	    font-weight: 750;
+	    text-decoration: none;
+	}
+
+	.dw-home-module-link:hover {
+	    color: var(--dw-primary-dark);
+	    text-decoration: underline;
+	}
+
+	/* Franja de reportes */
+
+	.dw-home-report {
+	    display: flex;
+	    align-items: center;
+	    justify-content: space-between;
+	    gap: 25px;
+	    margin-bottom: 45px;
+	    padding: 32px;
+	    border: 1px solid var(--dw-border);
+	    border-radius: var(--dw-radius);
+	    background: #fff;
+	    box-shadow: 0 4px 18px rgba(16, 28, 53, .035);
+	}
+
+	.dw-home-report h2 {
+	    margin-bottom: 10px;
+	    color: var(--dw-navy);
+	    font-size: 1.55rem;
+	    font-weight: 800;
+	}
+
+	.dw-home-report p:not(.dw-eyebrow) {
+	    max-width: 650px;
+	    margin-bottom: 0;
+	    color: var(--dw-muted);
+	}
+
+	.dw-home-report .dw-home-btn-primary {
+	    flex-shrink: 0;
+	}
+
+	/* Adaptación a tablets y móviles */
+
+	@media (max-width: 991.98px) {
+	    .dw-home-hero {
+	        grid-template-columns: 1fr;
+	        gap: 10px;
+	        margin-bottom: 45px;
+	    }
+
+	    .dw-home-visual {
+	        min-height: 280px;
+	    }
+
+	    .dw-home-floating-top {
+	        right: 5%;
+	    }
+
+	    .dw-home-floating-bottom {
+	        left: 5%;
+	    }
+	}
+
+	@media (max-width: 575.98px) {
+	    .dw-home-hero {
+	        gap: 0;
+	        padding: 28px 22px;
+	        border-radius: 17px;
+	    }
+
+	    .dw-home-hero h1 {
+	        font-size: 2.35rem;
+	    }
+
+	    .dw-home-hero-content > p {
+	        font-size: .95rem;
+	    }
+
+	    .dw-home-actions {
+	        flex-direction: column;
+	    }
+
+	    .dw-home-actions .btn {
+	        width: 100%;
+	    }
+
+	    .dw-home-visual {
+	        min-height: 250px;
+	        margin-top: 15px;
+	    }
+
+	    .dw-home-orbit-two {
+	        width: 240px;
+	        height: 240px;
+	    }
+
+	    .dw-home-orbit-one {
+	        width: 185px;
+	        height: 185px;
+	    }
+
+	    .dw-home-symbol {
+	        width: 115px;
+	        height: 115px;
+	        border-radius: 27px;
+	    }
+
+	    .dw-home-symbol span {
+	        font-size: 60px;
+	    }
+
+	    .dw-home-floating {
+	        padding: 10px 12px;
+	    }
+
+	    .dw-home-floating-top {
+	        top: 8px;
+	        right: 0;
+	    }
+
+	    .dw-home-floating-bottom {
+	        bottom: 5px;
+	        left: 0;
+	    }
+
+	    .dw-home-report {
+	        align-items: stretch;
+	        flex-direction: column;
+	        padding: 23px;
+	    }
+
+	    .dw-home-report .dw-home-btn-primary {
+	        width: 100%;
+	    }
+	}
 }

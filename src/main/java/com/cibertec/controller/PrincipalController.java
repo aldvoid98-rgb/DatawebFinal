@@ -5,14 +5,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PrincipalController {
-	
-	@GetMapping("/")
-	public String cargarPrincipal() {
-		return "Principal";
-	}
 
+    @GetMapping("/")
+    public String cargarInicio() {
+        return "inicio";
+    }
+
+    @GetMapping("/principal")
+    public String cargarPrincipal() {
+        return "Principal";
+    }
 }
-
 
 
 
