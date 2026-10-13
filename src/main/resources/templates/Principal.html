@@ -1,76 +1,50 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<!-- importamos estilos bootstrap -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>DataWeb | Inicio</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+	<!-- Tu diseño personalizado -->
+	<link rel="stylesheet" th:href="@{/css/dataweb.css}">
 </head>
 
+
+
+
 <body>
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
-		<div class="container-fluid">
+	
 
-			<a class="navbar-brand fw-bold" href="/principal">
-				DataWeb
+	<!-- AQUÍ APARECE LA BARRA DE NAVEGACIÓN -->
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+	<!-- DEBAJO EMPIEZA EL CONTENIDO DE TU PÁGINA -->
+	<main class="dw-page">
+
+		<section class="dw-hero">
+			<h1>Bienvenido a DataWeb</h1>
+
+			<p>
+				Administra tus recursos desde un solo lugar.
+			</p>
+
+			<a th:href="@{/cargaClientes}" class="btn btn-light text-primary">
+				Gestionar clientes
 			</a>
+		</section>
 
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar navegación">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+	</main>
 
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav ms-auto">
+	<!-- BOOTSTRAP JAVASCRIPT -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-					<li class="nav-item">
-						<a class="nav-link" href="/principal">Inicio</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="/cargaMaqui">
-							Maquinaria
-						</a>
-					</li>
-					
-					<li class="nav-item">
-					    <a class="nav-link" href="/cargaClientes">
-					        Clientes
-					    </a>
-					</li>
-					
-					<li class="nav-item">
-					    <a class="nav-link" href="/cargaEmpleados">
-					        Empleados
-					    </a>
-					</li>
-					
-					<li class="nav-item">
-					    <a class="nav-link" href="/cargaProv">
-					        Proveedores
-					    </a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="#">Reportes</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="/formulario">
-							Iniciar sesión
-						</a>
-					</li>
-
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<!-- importamos lib js de bootstrap -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-		crossorigin="anonymous"></script>
 </body>
+
 
 </html>
