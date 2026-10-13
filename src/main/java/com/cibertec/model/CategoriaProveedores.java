@@ -9,16 +9,20 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="tb_categoria_proveedor")
+@Table(name = "tb_categoria_proveedor")
 @Data
 public class CategoriaProveedores {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_categoria_proveedor")
-	private Integer idCatProv; // int not null primary key,
-	
-	@Column(name = "descrip_prov")
-	private String descripProv; // varchar(45)
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_categoria_proveedor")
+    private Integer idCatProv;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "descrip_prov")
+    private String descripProv;
 }
+
+

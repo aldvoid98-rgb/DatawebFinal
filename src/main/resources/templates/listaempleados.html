@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Listado de Empleados</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+	<div class="container mt-4 mb-5">
+
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h1 class="h3">Listado de Empleados</h1>
+
+			<a th:href="@{/cargaEmpleados}" class="btn btn-primary">
+				Registrar empleado
+			</a>
+		</div>
+
+		<div class="table-responsive">
+
+			<table class="table table-hover table-striped table-bordered align-middle">
+
+				<thead class="table-dark">
+					<tr>
+						<th>Código</th>
+						<th>Nombres</th>
+						<th>Apellidos</th>
+						<th>DNI</th>
+						<th>Cargo</th>
+						<th>Teléfono</th>
+						<th>Correo</th>
+						<th>Fecha de ingreso</th>
+						<th>Rol</th>
+						<th>Categoría</th>
+						<th>Estado</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+					<tr th:each="e : ${lstEmpleados}">
+
+						<td th:text="${e.id_empleado}">1</td>
+
+						<td th:text="${e.nomEmpl}">Ricardo</td>
+
+						<td th:text="${e.apeEmpl}">Mendoza</td>
+
+						<td th:text="${e.dniEmpl}">60000002</td>
+
+						<td th:text="${e.cargo}">Jefe de Logistica</td>
+
+						<td th:text="${e.telEmpl}">999222222</td>
+
+						<td th:text="${e.correEmpl}">correo@dataweb.com</td>
+
+						<td th:text="${e.fecha_ingreso != null
+                        ? #temporals.format(e.fecha_ingreso, 'dd/MM/yyyy')
+                        : 'No registrada'}">
+							15/01/2026
+						</td>
+
+						<td th:text="${e.objRol != null
+                        ? e.objRol.nomRol
+                        : 'Sin rol'}">
+							JEFE DE LOGISTICA
+						</td>
+
+						<td th:text="${e.objCatEmple != null
+                        ? e.objCatEmple.descripEmple
+                        : 'Sin categoría'}">
+							Logistica
+						</td>
+
+						<td>
+							<span th:if="${e.estado != null and e.estado == 1}" class="badge bg-success">
+								Activo
+							</span>
+
+							<span th:unless="${e.estado != null and e.estado == 1}" class="badge bg-secondary">
+								Inactivo
+							</span>
+						</td>
+
+						<td>
+							<a th:href="@{/editarEmpleado/{id}(id=${e.id_empleado})}" class="btn btn-warning btn-sm">
+								Editar
+							</a>
+						</td>
+
+					</tr>
+
+					<tr th:if="${#lists.isEmpty(lstEmpleados)}">
+						<td colspan="12" class="text-center">
+							No hay empleados registrados.
+						</td>
+					</tr>
+
+				</tbody>
+
+			</table>
+
+		</div>
+
+		<a th:href="@{/}" class="btn btn-secondary">
+			Volver al inicio
+		</a>
+
+		<a th:href="@{/cargaEmpleados}" class="btn btn-outline-primary">
+			Volver al registro
+		</a>
+
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+	</script>
+
+</body>
+
+</html>

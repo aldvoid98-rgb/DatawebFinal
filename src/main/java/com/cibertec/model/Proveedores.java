@@ -11,41 +11,55 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="tb_proveedores")
+@Table(name = "tb_proveedores")
 @Data
 public class Proveedores {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_proveedor")
-	private Integer idProveedor;
-	
-	@Column(name="razon_social")
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_proveedor")
+    private Integer idProveedor;
+
+    @Column(name = "razon_social")
     private String razonSocial;
 
-	@Column(name="ruc")
+    @Column(name = "ruc")
     private String ruc;
 
-	@Column(name="contacto")
+    @Column(name = "contacto")
     private String contacto;
 
-	@Column(name="telefono")
+    @Column(name = "telProv")
     private String telefono;
 
-	@Column(name="correo")
+    @Column(name = "correProv")
     private String correo;
 
-	@Column(name="direccion")
+    @Column(name = "direProv")
     private String direccion;
 
-	@Column(name="id_rol")
-    private String id_rol;
+    @Column(name = "id_rol")
+    private Integer idRol;
 
-	@Column(name="estado")
+    @Column(name = "estado")
     private Integer estado = 1;
-	
-	@ManyToOne
-	@JoinColumn(name = "idCatEmple", insertable = false, updatable = false)
-	private CategoriaEmpleados objCatEmple;
 
+    @Column(name = "id_categoria_proveedor")
+    private Integer idCatProv;
+
+    @ManyToOne
+    @JoinColumn(
+        name = "id_categoria_proveedor",
+        insertable = false,
+        updatable = false
+    )
+    private CategoriaProveedores objCatProv;
+
+    @ManyToOne
+    @JoinColumn(
+        name = "id_rol",
+        insertable = false,
+        updatable = false
+    )
+    private Rol objRol;
 }
