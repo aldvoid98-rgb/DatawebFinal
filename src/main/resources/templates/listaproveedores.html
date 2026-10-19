@@ -19,9 +19,17 @@
 		<div class="d-flex justify-content-between align-items-center mb-3">
 			<h1 class="h2">Listado de Proveedores</h1>
 
-			<a th:href="@{/cargaProv}" class="btn btn-primary">
-				Nuevo proveedor
-			</a>
+			<div>
+				<!-- Botón de Reporte PDF -->
+				<a th:href="@{/reportes/proveedores}" class="btn me-2" style="background-color: #f97316; color: white; border: none; font-weight: 500;">
+					📄 Reporte PDF
+				</a>
+
+				<!-- Botón existente de Nuevo Proveedor -->
+				<a th:href="@{/cargaProv}" class="btn btn-primary">
+					Nuevo proveedor
+				</a>
+			</div>
 		</div>
 
 		<div class="card shadow-sm">
