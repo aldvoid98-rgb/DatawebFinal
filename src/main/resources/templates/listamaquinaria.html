@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Listado de Maquinarias</title>
+	<!-- importamos estilos bootstrap -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+	<!-- Estilos de DataWeb: navbar y logo -->
+	<link rel="stylesheet" th:href="@{/css/dataweb.css}">
+</head>
+
+<body>
+
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+	<div class="container mt-4">
+
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h1>Listado de Maquinarias</h1>
+
+			<!-- Solo el administrador puede registrar -->
+			<a th:if="${session.rol == 'ADMINISTRADOR'}" th:href="@{/cargaMaqui}" class="btn btn-primary">
+				Registrar maquinaria
+			</a>
+		</div>
+
+		<!-- Mensaje de eliminación: verde si fue correcta, rojo si falló -->
+		<div th:if="${mensaje != null}" class="mb-3" th:classappend="${cssmensaje}" role="alert"
+			th:text="${mensaje}">
+		</div>
+
+		<!-- tabla -->
+		<table class="table table-hover table-striped align-middle">
+			<thead>
+				<tr>
+					<th scope="col">Código</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Marca</th>
+					<th scope="col">Potencia (kW)</th>
+					<th scope="col">Precio</th>
+					<th scope="col">Categoría</th>
+					<th scope="col">Situación</th>
+					<th scope="col">Estado</th>
+					<th scope="col">Imagen</th>
+					<th scope="col" th:if="${session.rol == 'ADMINISTRADOR'}">Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- recorrer el atributo lstMaquinaria para generar las filas -->
+				<tr th:each="m : ${lstMaquinaria}">
+					<td th:text="${m.id_maquinaria}">1</td>
+					<td th:text="${m.nomMaqui}">Prensa offset</td>
+					<td th:text="${m.marca}">Heidelberg</td>
+					<td th:text="${m.potenciaKw}">15.0</td>
+					<td th:text="${'S/ ' + #numbers.formatDecimal(m.precio, 1, 'COMMA', 2, 'POINT')}">S/ 25,50</td>
+					<td th:text="${m.objCatMaqui?.descripMaqui}">Categoría</td>
+					<td>
+						<span th:if="${m.situacion == 1}" class="badge bg-success">Activo</span>
+						<span th:if="${m.situacion == 2}" class="badge bg-warning text-dark">En mantenimiento</span>
+						<span th:if="${m.situacion == 3}" class="badge bg-secondary">Inactivo</span>
+					</td>
+					<!-- Estado = existencia del registro: true (existe) / false (eliminado) -->
+					<td>
+						<span th:if="${m.estado == 1}" class="badge bg-success">true</span>
+						<span th:unless="${m.estado == 1}" class="badge bg-danger">false</span>
+					</td>
+					<td>
+						<img th:src="@{/img/maquinaria/}+${m.id_maquinaria <= 10 ? m.id_maquinaria : 'noimagen'}+@{.png}"
+							width="80" height="80" alt="imagen">
+					</td>
+
+					<!-- Acciones: solo ADMINISTRADOR (el servidor también lo exige) -->
+					<td th:if="${session.rol == 'ADMINISTRADOR'}" class="text-nowrap">
+						<a th:href="@{/editar/{id}(id=${m.id_maquinaria})}" class="btn btn-warning btn-sm">Editar</a>
+
+						<form th:action="@{/eliminar/{id}(id=${m.id_maquinaria})}" method="post" class="d-inline"
+							onsubmit="return confirm('¿Deseas eliminar esta maquinaria?');">
+							<button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+						</form>
+					</td>
+				</tr>
+
+				<tr th:if="${#lists.isEmpty(lstMaquinaria)}">
+					<td colspan="10" class="text-center text-muted">No hay maquinarias registradas.</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<a th:href="@{/inicio}" class="btn btn-outline-primary">Inicio</a>
+
+		<a th:if="${session.rol == 'ADMINISTRADOR'}" th:href="@{/cargaMaqui}" class="btn btn-secondary">
+			Volver al registro
+		</a>
+	</div>
+
+	<!-- importamos lib js de bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

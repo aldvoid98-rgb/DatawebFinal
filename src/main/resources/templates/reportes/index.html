@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Reportes | DataWeb</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" th:href="@{/css/dataweb.css}">
+</head>
+
+<body>
+
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+	<main class="container py-5">
+
+		<h1 class="mb-2">Reportes</h1>
+
+		<p class="text-secondary mb-4">
+			Selecciona una entidad para descargar su reporte en PDF.
+		</p>
+
+		<div class="row g-3">
+
+			<div class="col-12 col-md-6" th:each="t : ${tipos}">
+
+				<div class="card h-100 shadow-sm">
+
+					<div class="card-body">
+
+						<h2 class="h5" th:text="${t.value}">
+							Entidad
+						</h2>
+
+						<p class="text-secondary small">
+							Descarga el reporte de esta entidad
+							generado con JasperReports.
+						</p>
+
+						<a class="btn btn-primary btn-sm" th:href="@{/reportes/{tipo}/descargar(tipo=${t.key})}">
+							Descargar PDF
+						</a>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

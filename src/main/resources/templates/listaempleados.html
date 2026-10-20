@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Listado de Empleados</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Estilos de DataWeb: navbar y logo -->
+	<link rel="stylesheet" th:href="@{/css/dataweb.css}">
+</head>
+
+<body class="bg-light">
+
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+	<div class="container mt-4 mb-5">
+
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h1 class="h3">Listado de Empleados</h1>
+
+			<!-- Solo el administrador puede registrar -->
+			<a th:if="${session.rol == 'ADMINISTRADOR'}" th:href="@{/cargaEmpleados}" class="btn btn-primary">
+				Registrar empleado
+			</a>
+		</div>
+
+		<!-- Mensaje de eliminación: verde si fue correcta, rojo si falló -->
+		<div th:if="${mensaje != null}" class="mb-3" th:classappend="${cssmensaje}" role="alert"
+			th:text="${mensaje}">
+		</div>
+
+		<div class="table-responsive">
+
+			<table class="table table-hover table-striped table-bordered align-middle">
+
+				<thead class="table-dark">
+					<tr>
+						<th>Código</th>
+						<th>Nombres</th>
+						<th>Apellidos</th>
+						<th>DNI</th>
+						<th>Cargo</th>
+						<th>Teléfono</th>
+						<th>Correo</th>
+						<th>Fecha de ingreso</th>
+						<th>Rol</th>
+						<th>Categoría</th>
+						<th>Estado</th>
+						<th th:if="${session.rol == 'ADMINISTRADOR'}">Acciones</th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+					<tr th:each="e : ${lstEmpleados}">
+
+						<td th:text="${e.id_empleado}">1</td>
+
+						<td th:text="${e.nomEmpl}">Ricardo</td>
+
+						<td th:text="${e.apeEmpl}">Mendoza</td>
+
+						<td th:text="${e.dniEmpl}">60000002</td>
+
+						<td th:text="${e.cargo}">Jefe de Logistica</td>
+
+						<td th:text="${e.telEmpl}">999222222</td>
+
+						<td th:text="${e.correEmpl}">correo@dataweb.com</td>
+
+						<td th:text="${e.fecha_ingreso != null
+                        ? #temporals.format(e.fecha_ingreso, 'dd/MM/yyyy')
+                        : 'No registrada'}">
+							15/01/2026
+						</td>
+
+						<td th:text="${e.objRol != null
+                        ? e.objRol.nomRol
+                        : 'Sin rol'}">
+							JEFE DE LOGISTICA
+						</td>
+
+						<td th:text="${e.objCatEmple != null
+                        ? e.objCatEmple.descripEmple
+                        : 'Sin categoría'}">
+							Logistica
+						</td>
+
+						<td>
+							<span th:if="${e.estado != null and e.estado == 1}" class="badge bg-success">
+								Activo
+							</span>
+
+							<span th:unless="${e.estado != null and e.estado == 1}" class="badge bg-secondary">
+								Inactivo
+							</span>
+						</td>
+
+						<!-- Acciones: solo ADMINISTRADOR (el servidor también lo exige) -->
+						<td th:if="${session.rol == 'ADMINISTRADOR'}" class="text-nowrap">
+							<a th:href="@{/editarEmpleado/{id}(id=${e.id_empleado})}" class="btn btn-warning btn-sm">
+								Editar
+							</a>
+
+							<form th:action="@{/eliminarEmpleado/{id}(id=${e.id_empleado})}" method="post"
+								class="d-inline" onsubmit="return confirm('¿Deseas eliminar este empleado?');">
+								<button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+							</form>
+						</td>
+
+					</tr>
+
+					<tr th:if="${#lists.isEmpty(lstEmpleados)}">
+						<td colspan="12" class="text-center">
+							No hay empleados registrados.
+						</td>
+					</tr>
+
+				</tbody>
+
+			</table>
+
+		</div>
+
+		<a th:href="@{/inicio}" class="btn btn-secondary">
+			Volver al inicio
+		</a>
+
+		<a th:if="${session.rol == 'ADMINISTRADOR'}" th:href="@{/cargaEmpleados}"
+			class="btn btn-outline-primary">
+			Volver al registro
+		</a>
+
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+	</script>
+
+</body>
+
+</html>

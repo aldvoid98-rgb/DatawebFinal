@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>DataWeb | Inicio</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+	<!-- Tu diseño personalizado -->
+	<link rel="stylesheet" th:href="@{/css/dataweb.css}">
+</head>
+
+
+
+
+<body>
+	
+
+	<!-- AQUÍ APARECE LA BARRA DE NAVEGACIÓN -->
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+	<!-- DEBAJO EMPIEZA EL CONTENIDO DE TU PÁGINA -->
+	<main class="dw-page">
+
+		<section class="dw-hero">
+			<h1>Bienvenido a DataWeb</h1>
+
+			<p>
+				Administra tus recursos desde un solo lugar.
+			</p>
+
+			<a th:if="${session.rol == 'ADMINISTRADOR'}" th:href="@{/cargaClientes}"
+				class="btn btn-light text-primary">
+				Gestionar clientes
+			</a>
+
+			<a th:if="${session.rol == 'JEFE DE LOGISTICA'}" th:href="@{/listadoclientes}"
+				class="btn btn-light text-primary">
+				Consultar clientes
+			</a>
+
+			<a th:if="${session.rol == 'PROVEEDOR'}" th:href="@{/listado}"
+				class="btn btn-light text-primary">
+				Ver maquinaria
+			</a>
+		</section>
+
+	</main>
+
+	<!-- BOOTSTRAP JAVASCRIPT -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+
+</html>

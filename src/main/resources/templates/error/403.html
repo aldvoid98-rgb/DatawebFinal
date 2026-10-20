@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acceso denegado | DataWeb</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/dataweb.css}">
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<main class="container py-5 text-center">
+  <h1 class="display-5 text-danger">403</h1>
+  <h2 class="h4">Acceso denegado</h2>
+  <p class="text-secondary">Tu rol no tiene permisos para realizar esta operación.</p>
+  <a class="btn btn-primary" th:href="@{/inicio}">Volver al inicio</a>
+</main>
+</body></html>

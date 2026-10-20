@@ -1,0 +1,122 @@
+<!-- templates/fragments/navbar.html -->
+<nav th:fragment="navbar" class="navbar navbar-expand-lg dw-navbar" xmlns:th="http://www.thymeleaf.org">
+
+	<div class="container-fluid px-lg-4">
+
+		<a class="navbar-brand dw-brand" th:href="@{/inicio}">
+			<span class="dw-brand-icon">
+				<img th:src="@{/img/LogoDataweb.jpg}" alt="" class="dw-navbar-logo">
+			</span>
+			<span>DataWeb</span>
+		</a>
+
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar navegación">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ms-auto align-items-lg-center">
+
+				<!-- INICIO: los 3 roles -->
+				<li class="nav-item" th:if="${session.rol != null}">
+					<a class="nav-link" th:href="@{/inicio}">
+						Inicio
+					</a>
+				</li>
+
+				<!--
+					Los enlaces se adaptan al rol, pero la seguridad real
+					la aplican los interceptores en el servidor.
+				-->
+
+				<!-- MAQUINARIA: el administrador entra al mantenimiento;
+					 jefe de logística y proveedor, solo a la lista -->
+				<li class="nav-item" th:if="${session.rol == 'ADMINISTRADOR'}">
+					<a class="nav-link" th:href="@{/cargaMaqui}">
+						Maquinaria
+					</a>
+				</li>
+				<li class="nav-item" th:if="${session.rol == 'JEFE DE LOGISTICA' or session.rol == 'PROVEEDOR'}">
+					<a class="nav-link" th:href="@{/listado}">
+						Maquinaria
+					</a>
+				</li>
+
+				<!-- CLIENTES -->
+				<li class="nav-item" th:if="${session.rol == 'ADMINISTRADOR'}">
+					<a class="nav-link" th:href="@{/cargaClientes}">
+						Clientes
+					</a>
+				</li>
+				<li class="nav-item" th:if="${session.rol == 'JEFE DE LOGISTICA'}">
+					<a class="nav-link" th:href="@{/listadoclientes}">
+						Clientes
+					</a>
+				</li>
+
+				<!-- EMPLEADOS -->
+				<li class="nav-item" th:if="${session.rol == 'ADMINISTRADOR'}">
+					<a class="nav-link" th:href="@{/cargaEmpleados}">
+						Empleados
+					</a>
+				</li>
+				<li class="nav-item" th:if="${session.rol == 'JEFE DE LOGISTICA'}">
+					<a class="nav-link" th:href="@{/listadoEmpleados}">
+						Empleados
+					</a>
+				</li>
+
+				<!-- PROVEEDORES -->
+				<li class="nav-item" th:if="${session.rol == 'ADMINISTRADOR'}">
+					<a class="nav-link" th:href="@{/cargaProv}">
+						Proveedores
+					</a>
+				</li>
+				<li class="nav-item" th:if="${session.rol == 'JEFE DE LOGISTICA'}">
+					<a class="nav-link" th:href="@{/listaprov}">
+						Proveedores
+					</a>
+				</li>
+
+				<!-- REPORTES: todos para administrador y jefe;
+					 solo el de maquinaria para el proveedor -->
+				<li class="nav-item" th:if="${session.rol == 'ADMINISTRADOR' or session.rol == 'JEFE DE LOGISTICA'}">
+					<a class="nav-link" th:href="@{/reportes}">
+						Reportes
+					</a>
+				</li>
+				<li class="nav-item" th:if="${session.rol == 'PROVEEDOR'}">
+				    <a class="nav-link"
+				       th:href="@{/reportes/maquinaria/descargar}">
+				        Reporte de maquinaria
+				    </a>
+				</li>
+
+				<!-- Mostrar el rol del usuario autenticado -->
+				<li class="nav-item" th:if="${session.rol != null}">
+				    <span class="nav-link">
+				        Rol:
+				        <strong th:text="${session.rol}">ADMINISTRADOR</strong>
+				    </span>
+				</li>
+
+				<!-- Mostrar login cuando no hay sesión -->
+				<li class="nav-item" th:if="${session.rol == null}">
+				    <a class="nav-link dw-login-link" th:href="@{/formulario}">
+				        Iniciar sesión →
+				    </a>
+				</li>
+
+				<!-- Mostrar cerrar sesión cuando el usuario ya ingresó -->
+				<li class="nav-item" th:if="${session.rol != null}">
+				    <a class="nav-link dw-login-link" th:href="@{/cerrarSesion}">
+				        Cerrar sesión
+				    </a>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+</nav>
