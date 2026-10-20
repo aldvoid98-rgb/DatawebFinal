@@ -1,0 +1,470 @@
+/* ============================================================
+   PROYECTO DATAWEB
+   SISTEMA DE GESTION DE MAQUINARIA PARA IMPRENTA
+   MYSQL
+   ============================================================ */
+
+DROP DATABASE IF EXISTS DATAWEB;
+
+CREATE DATABASE DATAWEB
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE DATAWEB;
+
+
+/* ============================================================
+   1. TABLA DE ROLES
+   ============================================================ */
+
+CREATE TABLE tb_rol (
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
+    nomRol VARCHAR(50) NOT NULL UNIQUE,
+    descripcion VARCHAR(150),
+    estado BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+/* ============================================================
+   2. CATEGORIAS DE MAQUINARIA
+   ============================================================ */
+
+CREATE TABLE tb_categoria_maquinaria (
+    id_categoria_maquinaria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    descrip_maqui VARCHAR(200),
+    estado BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+/* ============================================================
+   3. CATEGORIAS DE CLIENTES
+   ============================================================ */
+
+CREATE TABLE tb_categoria_cliente (
+    id_categoria_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    descrip_client VARCHAR(200),
+    estado BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+/* ============================================================
+   4. CATEGORIAS DE PROVEEDORES
+   ============================================================ */
+
+CREATE TABLE tb_categoria_proveedor (
+    id_categoria_proveedor INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    descrip_prov VARCHAR(200),
+    estado BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+/* ============================================================
+   5. CATEGORIAS DE EMPLEADOS
+   ============================================================ */
+
+CREATE TABLE tb_categoria_empleado (
+    id_categoria_empleado INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    descrip_empl VARCHAR(200),
+    estado BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+/* ============================================================
+   6. TABLA DE MAQUINARIA
+   ============================================================ */
+
+CREATE TABLE tb_maquinaria (
+    id_maquinaria INT AUTO_INCREMENT PRIMARY KEY,
+    nomMaqui VARCHAR(100) NOT NULL,
+    marca VARCHAR(80) NOT NULL,
+    potenciaKw DECIMAL(10,2) NOT NULL,
+    precio DECIMAL(12,2) NOT NULL,
+    id_categoria_maquinaria INT NOT NULL,
+    estado BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT fk_maquinaria_categoria
+        FOREIGN KEY (id_categoria_maquinaria)
+        REFERENCES tb_categoria_maquinaria(id_categoria_maquinaria)
+);
+
+
+/* ============================================================
+   7. TABLA DE CLIENTES
+   ============================================================ */
+
+CREATE TABLE tb_clientes (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nomClient VARCHAR(100) NOT NULL,
+    apeClient VARCHAR(100) NOT NULL,
+    dniClient CHAR(8) NOT NULL UNIQUE,
+    telClient VARCHAR(20),
+    correClient VARCHAR(120) UNIQUE,
+    direClient VARCHAR(200),
+    id_categoria_cliente INT NOT NULL,
+    estado BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT fk_cliente_categoria
+        FOREIGN KEY (id_categoria_cliente)
+        REFERENCES tb_categoria_cliente(id_categoria_cliente)
+);
+
+
+/* ============================================================
+   8. TABLA DE PROVEEDORES
+   ============================================================ */
+
+CREATE TABLE tb_proveedores (
+    id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
+    razon_social VARCHAR(150) NOT NULL,
+    ruc CHAR(11) NOT NULL UNIQUE,
+    contacto VARCHAR(100) NOT NULL,
+    telProv VARCHAR(20),
+    correProv VARCHAR(120),
+    direProv VARCHAR(200),
+    id_rol INT NOT NULL,
+    id_categoria_proveedor INT NOT NULL,
+    estado BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT fk_proveedor_rol
+        FOREIGN KEY (id_rol)
+        REFERENCES tb_rol(id_rol),
+
+    CONSTRAINT fk_proveedor_categoria
+        FOREIGN KEY (id_categoria_proveedor)
+        REFERENCES tb_categoria_proveedor(id_categoria_proveedor)
+);
+
+
+/* ============================================================
+   9. TABLA DE EMPLEADOS
+   ============================================================ */
+
+CREATE TABLE tb_empleados (
+    id_empleado INT AUTO_INCREMENT PRIMARY KEY,
+    nomEmpl VARCHAR(100) NOT NULL,
+    apeEmpl VARCHAR(100) NOT NULL,
+    dniEmpl CHAR(8) NOT NULL UNIQUE,
+    cargo VARCHAR(100),
+    telEmpl VARCHAR(20),
+    correEmpl VARCHAR(120) UNIQUE,
+    fecha_ingreso DATE,
+    id_rol INT NOT NULL,
+    id_categoria_empleado INT NOT NULL,
+    estado BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT fk_empleado_rol
+        FOREIGN KEY (id_rol)
+        REFERENCES tb_rol(id_rol),
+
+    CONSTRAINT fk_empleado_categoria
+        FOREIGN KEY (id_categoria_empleado)
+        REFERENCES tb_categoria_empleado(id_categoria_empleado)
+);
+
+
+/* ============================================================
+   10. TABLA DE CONTRASENAS
+   ============================================================ */
+
+CREATE TABLE tb_contrasena (
+    id_contrasena INT AUTO_INCREMENT PRIMARY KEY,
+    id_empleado INT NOT NULL UNIQUE,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL,
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ultimo_acceso DATETIME NULL,
+    estado BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT fk_contrasena_empleado
+        FOREIGN KEY (id_empleado)
+        REFERENCES tb_empleados(id_empleado)
+);
+
+
+/* ============================================================
+   11. INSERTAR ROLES
+   ============================================================ */
+
+INSERT INTO tb_rol (nomRol, descripcion, estado) VALUES
+('ADMINISTRADOR', 'Administrador general del sistema', TRUE),
+('JEFE DE LOGISTICA', 'Responsable de la gestion logistica', TRUE),
+('PROVEEDOR', 'Proveedor de maquinaria e insumos', TRUE);
+
+
+/* ============================================================
+   12. INSERTAR CATEGORIAS  (CORREGIDO: descripcion -> descrip_xxx)
+   ============================================================ */
+
+INSERT INTO tb_categoria_maquinaria (nombre, descrip_maqui) VALUES
+('Prensa offset', 'Maquinaria de impresion offset'),
+('Impresora digital', 'Equipos de impresion digital'),
+('Guillotina', 'Equipos de corte de papel'),
+('Plastificadora', 'Equipos de plastificado'),
+('Dobladora', 'Equipos de plegado de papel'),
+('Encuadernadora', 'Equipos de encuadernacion');
+
+INSERT INTO tb_categoria_cliente (nombre, descrip_client) VALUES
+('Persona natural', 'Cliente particular'),
+('Empresa', 'Cliente empresarial');
+
+INSERT INTO tb_categoria_proveedor (nombre, descrip_prov) VALUES
+('Fabricante', 'Fabricante de maquinaria'),
+('Distribuidor', 'Distribuidor de equipos e insumos'),
+('Servicio tecnico', 'Proveedor de mantenimiento');
+
+INSERT INTO tb_categoria_empleado (nombre, descrip_empl) VALUES
+('Administrativo', 'Personal administrativo'),
+('Logistica', 'Personal de gestion logistica'),
+('Operario', 'Personal que opera maquinaria'),
+('Tecnico', 'Personal de mantenimiento tecnico');
+
+
+/* ============================================================
+   13. INSERTAR MAQUINARIA
+   ============================================================ */
+
+INSERT INTO tb_maquinaria
+(nomMaqui, marca, potenciaKw, precio, id_categoria_maquinaria, estado)
+VALUES
+('Prensa offset Speedmaster SM 52', 'Heidelberg', 15.00, 85000.00, 1, TRUE),
+('Prensa offset Komori Lithrone GL-540', 'Komori', 18.50, 120000.00, 1, TRUE),
+('Prensa offset RMGT 920', 'RMGT', 22.00, 145000.00, 1, TRUE),
+('Impresora digital AccurioPress C3070', 'Konica Minolta', 7.50, 32000.00, 2, TRUE),
+('Impresora digital Versant 280', 'Xerox', 8.00, 38000.00, 2, TRUE),
+('Guillotina Polar N 78', 'Polar', 5.50, 28000.00, 3, TRUE),
+('Guillotina Challenge Titan 265', 'Challenge', 4.50, 22000.00, 3, TRUE),
+('Plastificadora GMP QTOPIC-380', 'GMP', 3.50, 9500.00, 4, TRUE),
+('Dobladora Stahlfolder Ti 52', 'Heidelberg', 6.00, 27000.00, 5, TRUE),
+('Encuadernadora Horizon BQ-270V', 'Horizon', 2.50, 18000.00, 6, TRUE);
+
+
+/* ============================================================
+   14. INSERTAR CLIENTES
+   ============================================================ */
+
+INSERT INTO tb_clientes
+(nomClient, apeClient, dniClient, telClient,
+ correClient, direClient, id_categoria_cliente, estado)
+VALUES
+('Carlos', 'Ramirez Torres', '70123456', '987654321',
+ 'carlos.ramirez@gmail.com', 'Av. Arequipa 1250 - Lima', 1, TRUE),
+
+('Maria', 'Gonzales Perez', '70234567', '986543210',
+ 'maria.gonzales@gmail.com', 'Av. Brasil 850 - Lima', 1, TRUE),
+
+('Luis', 'Fernandez Castro', '70345678', '985432109',
+ 'luis.fernandez@gmail.com', 'Jr. Huancavelica 450 - Lima', 1, TRUE),
+
+('Ana', 'Torres Mendoza', '70456789', '984321098',
+ 'ana.torres@gmail.com', 'Av. Universitaria 1500 - Lima', 1, TRUE),
+
+('Pedro', 'Vargas Ruiz', '70567890', '983210987',
+ 'pedro.vargas@gmail.com', 'Av. Colonial 780 - Callao', 1, TRUE),
+
+('Lucia', 'Martinez Silva', '70678901', '982109876',
+ 'lucia.martinez@gmail.com', 'Av. La Marina 2300 - Lima', 1, TRUE),
+
+('Jorge', 'Flores Diaz', '70789012', '981098765',
+ 'jorge.flores@gmail.com', 'Jr. Ica 620 - Lima', 1, TRUE),
+
+('Sofia', 'Castillo Ramos', '70890123', '980987654',
+ 'sofia.castillo@gmail.com', 'Av. Canada 1350 - Lima', 1, TRUE),
+
+('Diego', 'Morales Sanchez', '70901234', '979876543',
+ 'diego.morales@gmail.com', 'Av. Tomas Marsano 890 - Lima', 1, TRUE),
+
+('Valeria', 'Herrera Lopez', '70012345', '978765432',
+ 'valeria.herrera@gmail.com', 'Av. Angamos 1650 - Lima', 1, TRUE);
+
+
+/* ============================================================
+   15. INSERTAR PROVEEDORES
+   ============================================================ */
+
+INSERT INTO tb_proveedores
+(razon_social, ruc, contacto, telProv, correProv,
+ direProv, id_rol, id_categoria_proveedor, estado)
+VALUES
+('Grafic Equipment Peru S.A.C.', '20123456781', 'Juan Perez',
+ '987111111', 'ventas@grafic.com', 'Av. Argentina 1200 - Lima', 3, 2, TRUE),
+
+('Maquinas Graficas del Peru S.A.C.', '20234567892', 'Roberto Sanchez',
+ '987222222', 'contacto@maquinasgraficas.com',
+ 'Av. Colonial 1450 - Callao', 3, 2, TRUE),
+
+('Importaciones Heidelberg Peru S.A.C.', '20345678903', 'Miguel Torres',
+ '987333333', 'ventas@heidelberg.com',
+ 'Av. Elmer Faucett 890 - Callao', 3, 2, TRUE),
+
+('Tecnologia Grafica S.A.C.', '20456789014', 'Fernando Diaz',
+ '987444444', 'info@tecnografi.com',
+ 'Av. Universitaria 2300 - Lima', 3, 2, TRUE),
+
+('Equipos Digitales Peru S.A.C.', '20567890125', 'Ricardo Flores',
+ '987555555', 'ventas@equiposdigitales.com',
+ 'Av. Canada 1500 - Lima', 3, 2, TRUE),
+
+('Soluciones para Imprenta S.A.C.', '20678901236', 'Alberto Castillo',
+ '987666666', 'contacto@solucionesimprenta.com',
+ 'Av. Nicolas Ayllon 1800 - Lima', 3, 2, TRUE),
+
+('Graficas y Acabados S.A.C.', '20789012347', 'Eduardo Morales',
+ '987777777', 'ventas@graficasyacabados.com',
+ 'Jr. Huanta 560 - Lima', 3, 2, TRUE),
+
+('Importadora Grafica del Pacifico S.A.C.', '20890123458', 'Daniel Herrera',
+ '987888888', 'info@graficapacifico.com',
+ 'Av. La Marina 1900 - Lima', 3, 2, TRUE);
+
+
+/* ============================================================
+   16. INSERTAR EMPLEADOS
+   ============================================================ */
+
+INSERT INTO tb_empleados
+(nomEmpl, apeEmpl, dniEmpl, cargo, telEmpl, correEmpl,
+ fecha_ingreso, id_rol, id_categoria_empleado, estado)
+VALUES
+('Administrador', 'Sistema', '60000001', 'Administrador',
+ '999111111', 'admin@dataweb.com', '2026-01-10', 1, 1, TRUE),
+
+('Ricardo', 'Mendoza', '60000002', 'Jefe de Logistica',
+ '999222222', 'jefe.logistica@dataweb.com', '2026-01-15', 2, 2, TRUE),
+
+('Jose', 'Ramirez', '60000003', 'Asistente de Logistica',
+ '999333333', 'jose.ramirez@dataweb.com', '2026-02-01', 2, 2, TRUE),
+
+('Miguel', 'Torres', '60000004', 'Operador de Maquinaria',
+ '999444444', 'miguel.torres@dataweb.com', '2026-02-05', 2, 3, TRUE),
+
+('Luis', 'Castro', '60000005', 'Tecnico de Mantenimiento',
+ '999555555', 'luis.castro@dataweb.com', '2026-02-10', 2, 4, TRUE),
+
+('Pedro', 'Vargas', '60000006', 'Asistente de Almacen',
+ '999666666', 'pedro.vargas@dataweb.com', '2026-02-15', 2, 2, TRUE),
+
+('Jorge', 'Flores', '60000007', 'Operador de Impresion',
+ '999777777', 'jorge.flores@dataweb.com', '2026-02-20', 2, 3, TRUE),
+
+('Diego', 'Morales', '60000008', 'Tecnico Grafico',
+ '999888888', 'diego.morales@dataweb.com', '2026-02-25', 2, 4, TRUE),
+
+('Fernando', 'Ramos', '60000009', 'Asistente Administrativo',
+ '999999999', 'fernando.ramos@dataweb.com', '2026-03-01', 2, 1, TRUE),
+
+('Carlos', 'Sanchez', '60000010', 'Almacenero',
+ '998111111', 'carlos.sanchez@dataweb.com', '2026-03-05', 2, 2, TRUE);
+
+
+/* ============================================================
+   17. INSERTAR USUARIOS
+   IMPORTANTE: contrasenas de ejemplo para desarrollo.
+   En produccion deben almacenarse con hash seguro.
+   ============================================================ */
+
+INSERT INTO tb_contrasena
+(id_empleado, usuario, contrasena, fecha_creacion, estado)
+VALUES
+(1, 'admin', 'Admin123', NOW(), TRUE),
+(2, 'jefe.logistica', 'Logistica123', NOW(), TRUE),
+(3, 'jose.ramirez', 'Usuario123', NOW(), TRUE),
+(4, 'miguel.torres', 'Usuario123', NOW(), TRUE),
+(5, 'luis.castro', 'Usuario123', NOW(), TRUE),
+(6, 'pedro.vargas', 'Usuario123', NOW(), TRUE),
+(7, 'jorge.flores', 'Usuario123', NOW(), TRUE),
+(8, 'diego.morales', 'Usuario123', NOW(), TRUE),
+(9, 'fernando.ramos', 'Usuario123', NOW(), TRUE),
+(10, 'carlos.sanchez', 'Usuario123', NOW(), TRUE);
+
+
+/* ============================================================
+   18. CONSULTAS DE VERIFICACION
+   ============================================================ */
+
+SELECT * FROM tb_rol;
+SELECT * FROM tb_categoria_maquinaria;
+SELECT * FROM tb_categoria_cliente;
+SELECT * FROM tb_categoria_proveedor;
+SELECT * FROM tb_categoria_empleado;
+SELECT * FROM tb_maquinaria;
+SELECT * FROM tb_clientes;
+SELECT * FROM tb_proveedores;
+SELECT * FROM tb_empleados;
+SELECT * FROM tb_contrasena;
+
+
+/* ============================================================
+   19. CONSULTA: MAQUINARIA Y SU CATEGORIA
+   ============================================================ */
+
+SELECT
+    m.id_maquinaria,
+    m.nomMaqui,
+    m.marca,
+    m.precio,
+    c.nombre AS categoria
+FROM tb_maquinaria m
+INNER JOIN tb_categoria_maquinaria c
+    ON m.id_categoria_maquinaria = c.id_categoria_maquinaria;
+
+
+/* ============================================================
+   20. CONSULTA: CLIENTES Y SU CATEGORIA
+   ============================================================ */
+
+SELECT
+    c.id_cliente,
+    c.nomClient,
+    c.apeClient,
+    c.dniClient,
+    cat.nombre AS categoria
+FROM tb_clientes c
+INNER JOIN tb_categoria_cliente cat
+    ON c.id_categoria_cliente = cat.id_categoria_cliente;
+
+
+/* ============================================================
+   21. CONSULTA: PROVEEDORES, CATEGORIA Y ROL
+   ============================================================ */
+
+SELECT
+    p.id_proveedor,
+    p.razon_social,
+    p.ruc,
+    cat.nombre AS categoria,
+    r.nomRol AS rol
+FROM tb_proveedores p
+INNER JOIN tb_categoria_proveedor cat
+    ON p.id_categoria_proveedor = cat.id_categoria_proveedor
+INNER JOIN tb_rol r
+    ON p.id_rol = r.id_rol;
+
+
+/* ============================================================
+   22. CONSULTA: EMPLEADOS, CATEGORIA, USUARIO Y ROL
+   ============================================================ */
+
+SELECT
+    e.id_empleado,
+    e.nomEmpl,
+    e.apeEmpl,
+    e.cargo,
+    cat.nombre AS categoria,
+    c.usuario,
+    r.nomRol AS rol
+FROM tb_empleados e
+INNER JOIN tb_categoria_empleado cat
+    ON e.id_categoria_empleado = cat.id_categoria_empleado
+INNER JOIN tb_contrasena c
+    ON e.id_empleado = c.id_empleado
+INNER JOIN tb_rol r
+    ON e.id_rol = r.id_rol;
+
+
+/* ============================================================
+   FIN DEL SCRIPT DATAWEB
+   ============================================================ */
