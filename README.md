@@ -22,7 +22,7 @@ Son credenciales de prueba: cámbialas antes de usar el sistema en producción.
 Los controla `RoleAccessInterceptor` (lista blanca por ruta y método HTTP); ocultar botones en el navbar es solo cosmético.
 
 | | Administrador | Jefe de logística | Proveedor |
-|---|---|---|---|
+|---|---|---|---|---
 | Inicio | ✔ | ✔ | ✔ |
 | Listados de maquinaria, clientes, empleados, proveedores | ✔ | ✔ (solo consulta) | solo **maquinaria** |
 | Registrar / editar / eliminar | ✔ | ✘ | ✘ |
